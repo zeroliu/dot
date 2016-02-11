@@ -63,6 +63,9 @@ augroup END
 
 colorscheme distinguished
 highlight Folded ctermbg=237
+
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
 " }}}
 
 " FileType-specific settings ----{{{
