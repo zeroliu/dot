@@ -40,3 +40,11 @@ Compile YouCompleteMe plugin. (Check https://github.com/Valloric/YouCompleteMe f
 
 `cd ~/.vim/bundle/YouCompleteMe; ./install.py`
 
+Install tern module
+
+`cd ~/.vim/bundle/tern_for_vim; npm install tern`
+
+Install ag
+
+`brew install the_silver_searcher`
+
