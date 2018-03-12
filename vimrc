@@ -1,8 +1,12 @@
 " Basic settings ----{{{
-set rtp+=~/.vim/bundle/Vundle.vim
-syntax on
+set rtp+=~/.vim/bundle/Vundle.vim/
 
 set nocompatible
+set rtp+=~/.vim/bundle/neocomplete.vim/
+set rtp+=~/.vim/bundle/vimproc.vim/
+set rtp+=~/.vim/bundle/tsuquyomi/
+syntax on
+
 set t_Co=256
 set history=1000
 set background=dark
@@ -52,6 +56,9 @@ set undodir=~/.vim/undo
 set undolevels=1000
 set undoreload=10000
 
+" Better backspace
+set backspace=2
+
 let mapleader=','
 
 highlight clear SignColumn
@@ -61,11 +68,13 @@ augroup BgHighlight
   autocmd WinLeave * set nocul
 augroup END
 
+augroup vimrc_autocmd
+  autocmd BufEnter * highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+  autocmd BufEnter * match OverLength /\%81v.\+/
+augroup END
+
 colorscheme distinguished
 highlight Folded ctermbg=237
-
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
 " }}}
 
 " FileType-specific settings ----{{{
@@ -96,6 +105,18 @@ augroup filetype_python
   autocmd!
   autocmd FileType python set tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
+
+augroup filetype_js
+  autocmd!
+  autocmd BufWritePre *.js Neoformat prettier
+  autocmd FileType javascript setlocal omnifunc=tern#Complete
+augroup END
+
+augroup filetype_ts
+  autocmd!
+  autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+  autocmd BufWritePre *.ts Neoformat prettier
+augroup END
 " }}}
 
 " Plugins ----{{{
@@ -106,7 +127,6 @@ Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'scrooloose/syntastic'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Raimondi/delimitMate'
@@ -126,21 +146,69 @@ Plugin 'hdima/python-syntax'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'mxw/vim-jsx'
-Plugin 'justinj/vim-react-snippets'
+Plugin 'bentayloruk/vim-react-es6-snippets'
 Plugin 'terryma/vim-multiple-cursors'
+Plugin 'sbdchd/neoformat'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'Shougo/vimproc.vim'
+Plugin 'Quramy/tsuquyomi'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'fatih/vim-go'
 
 call vundle#end()
 
 " }}}
 
 " Plugin Configs ----{{{
+" neocomplete
+
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#auto_completion_start_length = 1
+let g:neocomplete#sources#buffer#cache_limit_size = 50000
+let g:neocomplete#data_directory = $HOME.'/.vim/cache/noecompl'
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+" Tab completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+
+if isdirectory(expand("~/.vim/bundle/vim-go"))
+  " format with goimports instead of gofmt
+  let g:go_fmt_command = "goimports"
+endif
+
+if isdirectory(expand("~/.vim/bundle/tsuquyomi"))
+  let g:tsuquyomi_disable_quickfix = 1
+  let g:syntastic_typescript_checkers = ['tsuquyomi']
+endif
+
+if isdirectory(expand("~/.vim/bundle/neoformat"))
+  let g:neoformat_javascript_prettier = {
+        \ 'exe': 'prettier',
+        \ 'args': ['--single-quote', '--stdin'],
+        \ 'stdin': 1
+        \ }
+  let g:neoformat_enabled_javascript = ['prettier']
+
+  let g:neoformat_typescript_prettier = {
+        \ 'exe': 'prettier',
+        \ 'args': ['--parser typescript', '--single-quote', '--stdin'],
+        \ 'stdin': 1
+        \ }
+  let g:neoformat_enabled_typescript = ['prettier']
+endif
+
 if isdirectory(expand("~/.vim/bundle/vim-jsx"))
   let g:jsx_ext_required = 0
 endif
 
-if isdirectory(expand("~/.vim/bundle/YouCompleteMe"))
-  let g:ycm_autoclose_preview_window_after_completion = 1
-endif
+"if isdirectory(expand("~/.vim/bundle/YouCompleteMe"))
+  "let g:ycm_autoclose_preview_window_after_completion = 1
+  "if !exists("g:ycm_semantic_triggers")
+    "let g:ycm_semantic_triggers = {}
+  "endif
+  "let g:ycm_semantic_triggers["typescript"] = ["."]
+"endif
 
 if isdirectory(expand("~/.vim/bundle/vim-startify"))
 
@@ -214,6 +282,7 @@ nnoremap <leader>/ viwy/<c-r>"<cr>
 vnoremap // y/<c-r>"<cr>
 
 inoremap jk <esc>
+inoremap JK <esc>
 inoremap <C-c> <CR><Esc>O
 noremap <C-j> <C-W>j
 noremap <C-k> <C-W>k
@@ -253,7 +322,6 @@ nnoremap z[ zo[z
 
 " Make Cut, Copy and Paste to feel native
 vnoremap <C-c> "*y
-vnoremap <C-x> "*d
 inoremap <C-v> <Esc>:set paste<CR>a<C-r>*<Esc>:set nopaste<CR>a
 " }}}
 
