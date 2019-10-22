@@ -1,0 +1,71 @@
+{
+  "editor.rulers": [80],
+  "editor.tabSize": 2,
+  "editor.tabCompletion": "on",
+  "editor.formatOnSave": true,
+  "workbench.startupEditor": "newUntitledFile",
+  "workbench.editor.enablePreview": false,
+  "html.format.enable": true,
+  "window.titleBarStyle": "custom",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "terminal.integrated.shell.linux": "/usr/bin/fish",
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.trailingComma": "all",
+  "prettier.singleQuote": true,
+  "vim.easymotion": true,
+  "vim.incsearch": true,
+  "vim.surround": true,
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.hlsearch": true,
+  "vim.visualstar": true,
+  "vim.leader": ",",
+  "vim.handleKeys": {},
+  "vim.insertModeKeyBindings": [
+    { "before": ["j", "k"], "after": ["<Esc>"] },
+    { "before": ["J", "K"], "after": ["<Esc>"] }
+  ],
+  "vim.visualModeKeyBindings": [
+    {
+      "before": ["<leader>", "c", "<Space>"],
+      "commands": [{ "command": "editor.action.commentLine" }]
+    }
+  ],
+  "vim.normalModeKeyBindings": [
+    { "before": ["K"], "after": ["i", "<Enter>", "<Esc>"] },
+    { "before": ["j"], "after": ["g", "j"] },
+    { "before": ["j"], "after": ["g", "j"] },
+    { "before": ["<leader>", "/"], "after": ["v", "i", "w", "*"] },
+    {
+      "before": ["<leader>", "d"],
+      "commands": [{ "command": "workbench.action.closeActiveEditor" }]
+    },
+    {
+      "before": ["<C-n>"],
+      "commands": [{ "command": ":nohl" }]
+    },
+    {
+      "before": ["<leader>", "c", "<Space>"],
+      "commands": [{ "command": "editor.action.commentLine" }]
+    }
+  ],
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "timeinserter.pre": "⏰ ",
+  "cSpell.userWords": [
+    "Anki",
+    "modularization"
+  ],
+  "explorer.confirmDragAndDrop": false,
+  "explorer.confirmDelete": false
+}
+
