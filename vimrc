@@ -264,6 +264,7 @@ if isdirectory(expand("~/.vim/bundle/ctrlp.vim"))
 endif
 
 if isdirectory(expand("~/.vim/bundle/vim-snipmate"))
+  let g:snipMate = { 'snippet_version' : 1 }
   imap <c-j> <esc>a<Plug>snipMateNextOrTrigger
   smap <c-j> <Plug>snipMateNextOrTrigger
 endif
