@@ -9,7 +9,7 @@ function fish_prompt --description 'Write out the prompt'
     end
 
     if not set -q __git_cb
-        set __git_cb (set_color brown)"("(git branch ^/dev/null | grep \* | sed 's/* //')")"(set_color normal)""
+        set __git_cb (set_color brown)"("(git branch 2>/dev/null | grep \* | sed 's/* //')")"(set_color normal)""
     end
 
     switch $USER
@@ -37,10 +37,6 @@ function fish_prompt --description 'Write out the prompt'
 end
 
 set -x WORKSPACE ~/Developer
-set -x DOCKER_CERT_PATH /Users/zeroliu/.boot2docker/certs/boot2docker-vm
-set -x DOCKER_TLS_VERIFY 1
-set -x DOCKER_HOST tcp://192.168.59.103:2376
-set -x DATABASE_URL postgres:///(eval whoami)
 
 # Alias
 function pe
@@ -49,18 +45,7 @@ end
 function ws
     cd $WORKSPACE
 end
-function wsc
-    cd $WORKSPACE/javascript/carpe-diem
-end
-function wss
-    cd $WORKSPACE/appengine/carpe-diem-server
-end
-function rpg
-    cd $WORKSPACE/rpgsnack-editor
-end
-function runtime
-    cd ~/go/src/github.com/hajimehoshi/rpgsnack-runtime
-end
+
 ## git alias
 function gs
     git status
@@ -78,10 +63,6 @@ function sudo
     else
         command sudo $argv
     end
-end
-
-function alexaconvert
-  ffmpeg -i "$argv" -ac 2 -codec:a libmp3lame -b:a 48k -ar 16000 "$argv"
 end
 
 function cleanbranch
